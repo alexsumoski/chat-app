@@ -9,11 +9,16 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
-
+  var _enteredEmail = '';
+  var _enteredPassword = '';
   var _isLogin = true;
 
   void _submit() {
-    _form.currentState!.validate();
+    final isValid = _form.currentState!.validate();
+
+    if (isValid) {
+      _form.currentState!.save();
+    }
   }
 
   @override
@@ -56,6 +61,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
                               return null;
                             },
+                            onSaved: (value) {
+                              _enteredEmail = value!;
+                            },
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
@@ -68,6 +76,9 @@ class _AuthScreenState extends State<AuthScreen> {
                               }
 
                               return null;
+                            },
+                            onSaved: (value) {
+                              _enteredPassword = value!;
                             },
                           ),
                           const SizedBox(
